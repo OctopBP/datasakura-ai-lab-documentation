@@ -180,6 +180,56 @@ SELF-CHECK:
 ```
 **Правила:** минимум прав (least privilege), секреты через .env/CI‑vault, маскирование логов, dry‑run при поддержке, версионирование плагинов/серверов, whitelist операций (чтение сцен, ограниченная запись префабов, без удалений по умолчанию).
 
+### Список MCP который ускоряют работу в unity:
+1. Unity MCP: https://github.com/CoplayDev/unity-mcp
+   Может управлять ассетами, контролировать сцены, редактировать скрипты и автоматизировать задачи в Unity.
+   
+   Установка:
+   - Установите плагин в Unity: https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity
+   - Перейдите в `Window -> Unity MCP -> Auto Setup` или добавьте конфигурацию вручную:
+      ```json
+      "unityMCP": {
+         "command": "uv",
+         "args": ["--directory","<ABSOLUTE_PATH_TO>/UnityMcpServer/src","run","server.py"],
+         "type": "stdio"
+       }
+      ```
+2. Task master: https://github.com/eyaltoledano/claude-task-master
+   Позволяет планоровать задачи и выполнять их по очереди
+   
+   Установка:
+   - Добавьте конфигурацию в cursor:
+      ```json
+      "task-master-ai": {
+         "command": "npx",
+         "args": ["-y", "task-master-ai"],
+         "env": {
+           "ANTHROPIC_API_KEY": "YOUR_ANTHROPIC_API_KEY_HERE",
+           "PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY_HERE",
+           "OPENAI_API_KEY": "YOUR_OPENAI_KEY_HERE",
+           "GOOGLE_API_KEY": "YOUR_GOOGLE_KEY_HERE",
+           "MISTRAL_API_KEY": "YOUR_MISTRAL_KEY_HERE",
+           "GROQ_API_KEY": "YOUR_GROQ_KEY_HERE",
+           "OPENROUTER_API_KEY": "YOUR_OPENROUTER_KEY_HERE",
+           "XAI_API_KEY": "YOUR_XAI_KEY_HERE",
+           "AZURE_OPENAI_API_KEY": "YOUR_AZURE_KEY_HERE",
+           "OLLAMA_API_KEY": "YOUR_OLLAMA_API_KEY_HERE"
+         }
+       }
+      ```
+      Ключи опциональны, если их добавить task master сможет профодить ресёрч на этапе планирования
+3. Context 7: https://github.com/upstash/context7
+   Позволяет cursor получать доступ к большой базе данных документаций
+   
+   Установка:
+   - Добавьте конфигурацию в cursor:
+      ```json
+      "context7": {
+        "args": ["-y", "@upstash/context7-mcp"],
+        "command": "npx"
+      }
+      ```
+     
 ---
 ## 11) Безопасность и приватность
 - Не вставлять ключи/токены в чаты.
